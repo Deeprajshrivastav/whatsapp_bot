@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<style>
+    @media (max-width: 750px) {
+    .container{
+        width: 80vw;
+    }
+}
+.body{
+    background: linear-gradient(to right, #704800, #884700);
+}
+
+</style>
+<body style=" background: linear-gradient(to right, #704800, #884700);">
+    <nav>
+        <div class="logo">WhatsApp BoT</div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="#" id="dashboard-link">Dashboard</a></li>
+            <li><a href="/create-bot_page">Create Bot</a></li>
+            <li><a href="/login" id="login-link">Login</a></li>
+            <li><a href="/bot-list">View Bots</a></li>
+            <li id="user-display"></li> <!-- This will be dynamically filled with the username -->
+
+            <li><a href="#" id="logout-link" style="display:none;">Logout</a></li>
+
+    
+
+
+        </ul>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <div class="container">
+        <h1>Welcome to WhatsApp Bot</h1>
+        <p>Secure authentication with JWT.</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

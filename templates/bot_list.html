@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<style>
+    /* General Page Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+nav {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+nav a {
+    color: #ffcc33;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #ffd966;
+}
+
+/* Bot Cards Container */
+#bot-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 120px 20px;
+}
+
+/* Individual Bot Card */
+/* .bot-card {
+    background: #304b82; 
+    border-radius: 12px;
+    padding: 20px;
+    width: 360px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+} */
+
+.bot-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Bot Name */
+.bot-card h3 {
+    font-size: 22px;
+    color: #ffcc33;
+    margin-bottom: 10px;
+}
+
+/* Menu Container */
+.menu-container {
+    background: rgba(255, 255, 255, 0.1); /* Light Background */
+    padding: 15px;
+    border: 2px solid #ffcc33;
+    border-radius: 8px;
+    text-align: left;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+/* Menu Items */
+.menu-container div {
+    background: rgba(0, 0, 0, 0.2); /* Clear separation */
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+.menu-container strong {
+    color: #ffcc33; /* Highlight Menu Titles */
+}
+
+/* Questions & Answers */
+.bot-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.bot-card ul li {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.bot-card ul li strong {
+    color: #ffcc33;
+}
+
+/* Buttons */
+button {
+    background: #ffcc33;
+    color: black;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #ffd966;
+}
+
+/* Edit Menu Button */
+.edit-btn {
+    background: #ff4747;
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #ff7373;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .bot-card {
+        width: 90%;
+    }
+}
+/* Menu & Questions Labels */
+.bot-card h4 {
+    font-size: 18px;
+    color: #ffcc33; /* Bright Yellow */
+    text-transform: uppercase;
+    text-align: center;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.5); /* Dark background for contrast */
+    border-radius: 6px;
+    margin-top: 15px;
+}
+/* Bot Card */
+.bot-card {
+    width: 100%;  /* Increased width */
+    max-width: 900px; /* Ensures it doesn't get too wide */
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    margin-right: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Navigation Bar */
+nav {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-links li {
+    display: inline;
+    margin: 0 15px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #ffd700;
+}
+
+/* Login Container */
+.container {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 100px;
+    text-align: center;
+    width: 350px;
+}
+
+/* Form Styles */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input[type="text"],
+input[type="password"] {
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+input::placeholder {
+    color: #ddd;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #ffd700;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #ffcc00;
+}
+
+/* Error Message */
+.error {
+    color: #ff4d4d;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+body{
+  /*  background: linear-gradient(to right, #141e30, #243b55);  */ /* Dark blue gradient */
+    background: linear-gradient(to right,  #583900, #783e00);
+}
+
+.menu-edit-box {
+    width:95%
+}
+</style>
+<body>
+    <nav>
+        <div class="logo">WhatsApp BoT</div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="#" id="dashboard-link">Dashboard</a></li>
+            <li><a href="/create-bot_page">Create Bot</a></li>
+            <li><a href="/login" id="login-link">Login</a></li>
+            <li><a href="/bot-list">View Bots</a></li>
+            <li id="user-display"></li> <!-- This will be dynamically filled with the username -->
+
+            <li><a href="#" id="logout-link" style="display:none;">Logout</a></li>
+
+    
+
+
+        </ul>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <!-- <h2>Bot List</h2> -->
+    <div id="bot-container" style="width: 80vw; margin: auto; margin-right: 17vw;">
+        <p>Loading bots...</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

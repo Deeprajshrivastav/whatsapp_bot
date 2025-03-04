@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<style>
+    /* General Styles */
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #6e00ff, #00c6ff);
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Navigation Bar */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: #3b0086;
+    color: white;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 15px;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Container */
+.create-bot-container {
+    background: white;
+    padding: 30px;
+    width: 50%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    text-align: center;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: bold;
+    text-align: left;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Aligning Inputs Properly */
+input[type="text"], input[type="file"], select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Auto Mode (Checkbox Inline with Label) */
+.auto-mode-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: start;
+}
+
+.auto-mode-container label {
+    margin: 0;
+}
+
+/* Buttons */
+button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    background: #ffcc00;
+    color: black;
+    font-weight: bold;
+}
+
+#add-question {
+    background: #28a745;
+    color: white;
+}
+
+.remove-question {
+    background: #dc3545;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+/* Success Message */
+#success-message {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .create-bot-container {
+        width: 90%;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Auto Mode - Fix Alignment */
+.auto-mode-container {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Adjusts spacing between checkbox and text */
+}
+
+.auto-mode-container label {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 16px;
+    gap: 5px;
+}
+
+/* Ensure checkbox doesn't move */
+.auto-mode-container input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+}
+h3{
+    margin: 0px;
+}
+</style>
+<body>
+    <nav>
+        <div class="logo">WhatsApp BoT</div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="#" id="dashboard-link">Dashboard</a></li>
+            <li><a href="/create-bot_page">Create Bot</a></li>
+            <li><a href="/login" id="login-link">Login</a></li>
+            <li><a href="/bot-list">View Bots</a></li>
+            <li id="user-display"></li> <!-- This will be dynamically filled with the username -->
+
+            <li><a href="#" id="logout-link" style="display:none;">Logout</a></li>
+
+    
+
+
+        </ul>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <div class="create-bot-container" style="margin-top: 100px;">
+        <h2>Create a New Bot</h2>
+        <form id="bot-form" enctype="multipart/form-data">
+            <h3><label for="bot-name">Bot Name:</label></h3>
+            
+            <input type="text" id="bot-name" name="bot_name" required>
+            <div>
+                <h3><label for="menu-file">Upload Menu:</label></h3>
+                <input type="file" id="menu-file" name="menu_file" required>
+                <h3><label for="bot-type">Bot type</label></h3> 
+                <select name="" id="">
+                    <option value="reasturent">Reasturent Bot</option>
+                    <option value="medical">Medical Bot</option>
+                </select>
+            </div>
+            <h3>Questions & Answers</h3>
+            <div id="question-container">
+                <div class="qa-field">
+                    <input type="text" name="questions[]" placeholder="Enter a question" required style="color: black;">
+                    <input type="text" name="answers[]" placeholder="Enter an answer" required  style="color: black;">
+                    <button type="button" class="remove-question">Remove</button>
+                </div>
+            </div>
+            <button type="button" id="add-question">Add Question</button>
+            <center>
+            <div class="auto-mode-container">
+                <label for="is-auto">
+                    <input type="checkbox" id="is-auto" name="is_auto"> Auto Mode
+                </label>
+            </div>
+        </center>
+            
+
+            <button type="submit">Create Bot</button>
+            <p id="success-message"></p>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Fetch user info from local storage or API
+            const userName = localStorage.getItem("username"); // Assuming username is stored in localStorage
+            if (userName) {
+                document.getElementById("user-info").textContent = Welcome, ${userName};
+                document.getElementById("user-info").style.display = "block";
+                document.getElementById("logout-link").style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>
