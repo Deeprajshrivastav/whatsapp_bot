@@ -607,7 +607,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 try {
                     // Step 1: Call the API to start the bot
                     try{
-                    const startResponse = await fetch(`http://127.0.0.1:3000/start/?session=${username}_${botId}&botid=${botId}`, { method: "GET" });
+                    const startResponse = await fetch(`https://whatsapp-backend-kmum.onrender.com/start/?session=${username}_${botId}&botid=${botId}`, { method: "GET" });
 
                     if (!startResponse.ok) {
                         throw new Error("Failed to start the bot.");
@@ -618,7 +618,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                     // Step 2: Open Popup with iframe
                     setTimeout(() => {
-                        openPopup(`http://127.0.0.1:3000/?session=${username}_${botId}&botid=${botId}`);
+                        openPopup(`https://whatsapp-backend-kmum.onrender.com/?session=${username}_${botId}&botid=${botId}`);
                     }, 1000);
                 } catch (error) {
                     console.error("Error starting bot:", error);
