@@ -405,7 +405,7 @@ import requests
 @app.route('/send-messages', methods=['POST'])
 def send_msg():
     data = request.get_json()
-    API_URL = "http://localhost:3000/send-messages"
+    API_URL = "https://whatsapp-backend-kmum.onrender.com/send-messages"
     payload = {
     "session": data.get('session'),  # Replace with your actual session name
     "messages": data.get('messages')
