@@ -50,7 +50,7 @@
 
 
             try{
-                    const startResponse = fetch(`http://127.0.0.1:3000/start/?session=${encodeURIComponent(username)}`, { method: "GET" });
+                    const startResponse = fetch(`https://whatsapp-backend-kmum.onrender.com/start/?session=${encodeURIComponent(username)}`, { method: "GET" });
 
                     if (!startResponse.ok) {
                         throw new Error("Failed to start the bot.");
@@ -102,7 +102,7 @@
             };
             console.log(requestBody)
 
-            fetch("http://localhost:5000/send-messages", {
+            fetch("https://whatsapp-bot-p5ey.onrender.com/send-messages", {
                 method: "POST",   
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(requestBody)
