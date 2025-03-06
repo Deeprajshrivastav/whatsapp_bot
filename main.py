@@ -5,6 +5,9 @@ from werkzeug.utils import secure_filename
 import os, json, base64
 from flask_sqlalchemy import SQLAlchemy
 from groq import Groq
+import pandas as pd
+
+
 
 app = Flask(__name__)
 CORS(app)  # Allows frontend requests
@@ -14,9 +17,45 @@ jwt = JWTManager(app)
 # Dummy user database
 USER_CREDENTIALS = {"username": "admin", "password": "password"}
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://whatsapp_bot_ph2f_user:wpMzB8LI6XupW62hTY9MIdWo2qnJpKoZ@dpg-cv340tgfnakc738hhj2g-a.oregon-postgres.render.com/whatsapp_bot_ph2f'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:deep@localhost/test1'
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
+
+
+
+# @app.route('/')
+# def index():
+#     return render_template('upload.html')
+
+@app.route('/upload', methods=['POST', 'GET'])
+def upload_file():
+    if request.method == 'GET':
+        return render_template('upload.html')
+
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file uploaded'}), 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+
+    try:
+        # Read CSV file
+        df = pd.read_csv(file, header=None)  # Assuming no header row
+        if df.shape[1] != 2:
+            return jsonify({'error': 'CSV must have exactly 2 columns'}), 400
+
+        # Convert to dictionary with first column as key, second as value
+        data_dict = dict(zip(df[0], df[1]))
+
+        return jsonify(data_dict)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 
 def encode_image(image_path):
     with open(image_path, "rb") as image_file:
@@ -362,6 +401,26 @@ def get_bot(bot_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+import requests
+@app.route('/send-messages', methods=['POST'])
+def send_msg():
+    data = request.get_json()
+    API_URL = "http://localhost:3000/send-messages"
+    payload = {
+    "session": data.get('session'),  # Replace with your actual session name
+    "messages": data.get('messages')
+}
+    headers = {"Content-Type": "application/json"}
+    response = requests.post(API_URL, data=json.dumps(payload), headers=headers)
+
+    # Print response
+    if response.status_code == 200:
+        print("✅ Messages sent successfully:", response.text)
+    else:
+        print("❌ Failed to send messages:", response.status_code, response.text)
+    return {}
+
+
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000) 
+    app.run()
