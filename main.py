@@ -437,7 +437,7 @@ from sqlalchemy.future import select
 from sqlalchemy.exc import NoResultFound
 
 # Database setup
-DATABASE_URL = "postgresql://user:password@localhost/dbname"
+DATABASE_URL = "postgresql://whatsapp_bot_ph2f_user:wpMzB8LI6XupW62hTY9MIdWo2qnJpKoZ@dpg-cv340tgfnakc738hhj2g-a.oregon-postgres.render.com/whatsapp_bot_ph2f"
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
@@ -455,7 +455,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # User model
 class UserDB(Base):
-    __tablename__ = "users"
+    __tablename__ = "users_table"
     email = Column(String, primary_key=True, index=True)
     password = Column(String, nullable=False)
 
