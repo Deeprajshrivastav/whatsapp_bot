@@ -441,6 +441,7 @@ DATABASE_URL = "postgresql://whatsapp_bot_ph2f_user:wpMzB8LI6XupW62hTY9MIdWo2qnJ
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
+from fastapi.middleware.cors import CORSMiddleware
 
 # Secret key for JWT
 SECRET_KEY = "your_secret_key"
@@ -448,7 +449,13 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Change this to specific origins in production
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all HTTP methods
+    allow_headers=["*"],  # Allows all headers
+)
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
